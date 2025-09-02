@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>نتایج جستجو برای: "{{ request.GET.q }}"</h1>
+    <ul>
+    {% for post in posts_list %}
+    <li>
+        <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" width="300">
+        {% endif %}
+        <p>{{ post.body }}</p>
+        <small style="display: block; text-align: right;">منتشر شده در: {{ post.created_at|date:"Y/m/d ساعت H:i" }}</small>
+    </li>
+    {% empty %}
+        <li>هیچ پستی مطابق با جستجوی شما یافت نشد.</li>
+    {% endfor %}
+    </ul>
+    <hr>
+    <a href="{% url 'home' %}">بازگشت به صفحه اصلی</a>
+{% endblock content %}

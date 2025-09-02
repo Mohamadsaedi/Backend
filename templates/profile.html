@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <div class="card-header">
+            <h2>👤 پروفایل کاربری</h2>
+          </div>
+          <div class="card-body">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+            
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>نام کاربری:</strong> {{ user.username }}</p>
+                <p><strong>ایمیل:</strong> {{ user.email }}</p>
+                <p><strong>نام:</strong> {{ user.first_name|default:"تعیین نشده" }}</p>
+                <p><strong>نام خانوادگی:</strong> {{ user.last_name|default:"تعیین نشده" }}</p>
+                <p><strong>تاریخ عضویت:</strong> {{ user.date_joined|date:"Y/m/d" }}</p>
+                <p><strong>نقش شما:</strong> {{ user.get_role_display }}</p>
+              </div>
+              <div class="col-md-6">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h5>📧 تست Email Backend</h5>
+                    <p class="text-muted">برای تست سیستم ارسال ایمیل، روی دکمه زیر کلیک کنید:</p>
+                    <form method="post" action="{% url 'test_email' %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-primary">
+                        🚀 ارسال ایمیل تست
+                      </button>
+                    </form>
+                    <small class="text-muted mt-2 d-block">
+                      ایمیل در کنسول سرور نمایش داده خواهد شد.
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <hr>
+            <p class="text-muted">شما می‌توانید از طریق پنل ادمین، نقش خود را تغییر دهید.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

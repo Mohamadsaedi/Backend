@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load socialaccount %} {% block content %}
+  <h2>ورود</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ورود</button>
+  </form>
+
+  <hr>
+  <h3>یا ورود از طریق:</h3>
+
+  <a href="{% provider_login_url 'google' %}">ورود با گوگل</a>
+
+{% endblock content %}

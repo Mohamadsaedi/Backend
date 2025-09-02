@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="post-detail-container" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="color: #333; text-align: center; margin-bottom: 30px; border-bottom: 3px solid #007bff; padding-bottom: 15px;">{{ post.title }}</h1>
+    
+    {% if post.image %}
+        <div class="post-image-container" style="text-align: center; margin: 30px 0;">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.2);">
+        </div>
+    {% endif %}
+    
+    <div class="post-content" style="line-height: 1.8; color: #444; font-size: 16px; margin: 30px 0;">
+        {{ post.body|linebreaks }}
+    </div>
+    
+    <div class="post-tags" style="margin: 25px 0; text-align: center;">
+        {% for tag in post.tags.all %}
+            <span style="background-color: #007bff; color: white; padding: 6px 12px; border-radius: 20px; margin: 0 5px; font-size: 0.9em;">#{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+    
+    <div class="post-meta" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin: 30px 0; text-align: center;">
+        <small style="color: #6c757d; font-size: 14px;">منتشر شده در: {{ post.created_at|date:"l d F Y، ساعت H:i" }}</small>
+    </div>
+    
+    <div class="post-actions" style="text-align: center; margin: 30px 0;">
+        <a href="{% url 'home' %}" style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; transition: background-color 0.3s;">بازگشت به لیست پست‌ها</a>
+    </div>
+</div>
+{% endblock content %}

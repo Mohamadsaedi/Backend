@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <title>وبلاگ من</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- نمایش پیام‌های Django -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message|safe }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <a href="{% url 'home' %}"><h1>وبلاگ من</h1></a>
+        </div>
+        
+        <div>
+            <nav>
+                <a href="{% url 'home' %}" style="margin-left: 15px;">خانه</a>
+                <a href="{% url 'contact' %}" style="margin-left: 15px;">تماس با ما</a>
+            </nav>
+            
+            {% if user.is_authenticated %}
+                
+                <p style="display: inline-block; margin-left: 10px;">
+                    خوش آمدید, <a href="{% url 'profile' %}">{{ user.username }}</a>!
+                </p>
+                
+                <form action="{% url 'logout' %}" method="post" style="display: inline-block;">
+                    {% csrf_token %}
+                    <button type="submit">خروج</button>
+                </form>
+
+            {% else %}
+                <a href="{% url 'login' %}">ورود</a> |
+                <a href="{% url 'signup' %}">ثبت نام</a>
+            {% endif %}
+        </div>
+    </header>
+    <hr>
+
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+</body>
+</html>

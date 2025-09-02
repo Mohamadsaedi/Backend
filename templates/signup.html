@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load socialaccount %} {% block content %}
+  <h2>ثبت نام</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ثبت نام</button>
+  </form>
+
+  <hr>
+  <h3>یا ثبت‌نام از طریق:</h3>
+
+  <a href="{% provider_login_url 'google' %}">ثبت نام با گوگل</a>
+
+{% endblock content %}
