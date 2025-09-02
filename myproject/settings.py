@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-9=8x&y=b1-#2y*=c%g+6s-*bcx(boc@h=e@$afhik!gg2(l28z"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', 'testserver']
 
 
 # Application definition
@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django.contrib.sites',
-    # اپ‌های allauth
     'allauth',
     'allauth.account',
-    'pages',  # <-- این خط را اضافه کنید
+    'allauth.socialaccount',
+    'pages',
     'users.apps.UsersConfig',
 ]
 
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'allauth.account.middleware.AccountMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "myproject.urls"
@@ -110,13 +110,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'fa-ir'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True  # <-- این خط را اضافه کنید
+USE_L10N = True
 
 USE_TZ = True
 
@@ -138,35 +138,35 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Custom User Model
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# تنظیمات django-allauth
+# django-allauth settings
 AUTHENTICATION_BACKENDS = [
-    # برای ورود با نام کاربری و رمز عبور معمولی
     'django.contrib.auth.backends.ModelBackend',
-    # برای ورود از طریق allauth
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 2
+SITE_ID = 1
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGIN_METHODS = ['email']
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 
-# تنظیمات Email Backend
-if DEBUG:
-    # در حالت توسعه، ایمیل‌ها در دیتابیس ذخیره می‌شوند
-    EMAIL_BACKEND = 'users.email_backends.DatabaseEmailBackend'
-    print("🔧 Email Backend: DatabaseEmailBackend (حالت توسعه)")
-else:
-    # در حالت تولید، از SMTP واقعی استفاده کنید
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = 'saedimohamad1376@gmail.com'
-    EMAIL_HOST_PASSWORD = 'wcfyjtvluwodfrca'  # App Password از Gmail
-    print("🔧 Email Backend: SMTP Backend (حالت تولید)")
+
+# Email settings
+# For development, we use the console backend to print emails to the console.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# For production, you should use a real email backend like SMTP.
+# The following is an example configuration for Gmail's SMTP server.
+# Make sure to set the EMAIL_HOST_USER and EMAIL_HOST_PASSWORD environment variables.
+#
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # Your Gmail address
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # Your Gmail app password
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
