@@ -3,4 +3,4 @@ fontawesomefree
 django-crispy-forms
 django-recaptcha
 pillow
-six
+django-allauth

@@ -1,30 +1,11 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>خوش آمدید</title>
-    <style>
-        body { font-family: sans-serif; direction: rtl; background: #f8fafc; color: #111827; }
-        .card { max-width: 560px; margin: 24px auto; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
-        .header { background: #111827; color: #ffffff; padding: 16px 20px; font-size: 18px; font-weight: 700; }
-        .content { padding: 20px; line-height: 1.9; font-size: 15px; }
-        .footer { padding: 16px 20px; color: #6b7280; font-size: 12px; border-top: 1px solid #e5e7eb; }
-        a { color: #2563eb; text-decoration: none; }
-    </style>
-    </head>
+    <title>Welcome</title>
+</head>
 <body>
-    <div class="card">
-        <div class="header">به وب‌سایت ما خوش آمدید</div>
-        <div class="content">
-            <p>سلام {{ user.username }} عزیز،</p>
-            <p>از اینکه به جمع ما پیوستید بسیار خوشحالیم. امیدواریم تجربه خوبی در سایت ما داشته باشید.</p>
-            <p>اگر سوالی داشتید، خوشحال می‌شویم از طریق <a href="{{ site_domain }}/contact/">فرم تماس</a> با ما در میان بگذارید.</p>
-        </div>
-        <div class="footer">
-            این ایمیل به صورت خودکار ارسال شده است. لطفاً به آن پاسخ ندهید.
-        </div>
-    </div>
+    <p>Hi {{ user.username }},</p>
+    <p>Thank you for registering at our website. We are happy to have you with us.</p>
 </body>
 </html>
-
-
